@@ -1,0 +1,21 @@
+{
+    "SERIAL": {
+        "COM_PLC": "COM7",
+        "BAUDRATE_PLC": 9600
+    },
+    "CAMERA": {
+        "IDC": 0
+    },
+    "SETTING": {
+        "THRESH_VALUE": 24,
+        "FGLUE_OFFSET_X": -115,
+        "FGLUE_OFFSET_Y": -10,
+        "FGLUE_WIDTH": 115,
+        "FGLUE_HEIGHT": 32,
+        "CONF_TEMPLATE": 0.85,
+        "CONF_FGLUE": 80.0,
+        "CONF_HPART_LEFT": 99.0,
+        "CONF_HPART_RIGHT": 99.0,
+        "CONF_3RD": 98.8
+    }
+}
