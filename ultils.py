@@ -6,7 +6,10 @@ import json
 PATH_CONFIG = './data/configs/config.json'
 PATH_ICON = './data/icons/Logo.ico'
 TITLE_PROGRAM = 'AOI FT672'
-PATH_TEMPLATE = './data/temp/2temp_black.png'
+# PATH_TEMPLATE = './data/temp/2temp_black.png'
+PATH_TEMPLATE = r'./data/temp/temp_white_1.png'
+# PATH_IMAGE_TEST = r'./data/temp/2f_black_3.png'
+PATH_IMAGE_TEST = r'./data/temp/f_white_ng_2.png'
 
 # colors & rectangle properties 
 GREEN_COLOR = (0, 255, 0)

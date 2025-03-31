@@ -3,7 +3,6 @@ import sys
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import (QApplication,)
 from PyQt5.QtCore import Qt
-import json
 from Serial_Thread import Serial_Thread
 from Camera_Thread import Camera_Thread
 import cv2
@@ -39,13 +38,11 @@ class MainApp:
         self.origin_image = frame
         # frame = frame.rotate
         
-        cv2.imshow("camera", frame)
+        self.IS_DISPLAY_FRAME =  self.config['SETTING']['IS_DISPLAY_FRAME']
+        if self.IS_DISPLAY_FRAME == 1: 
+            cv2.imshow("camera", frame)
     
-    def handle_update_frame(self): 
-        # frame = cv2.imread(r'D:\NguyenCuong\1A\FT672\img_2103\img\dataset_ng_white\14.png')
-        # frame = cv2.imread(r'C:\Users\V3109024\Downloads\img_l\2.png')
-        frame = cv2.imread(r'D:\NguyenCuong\1A\FT672\img_2103\img\dataset_ng_white\NG (2).png')
-        
+    def handle_update_frame(self, frame): 
         # rotate 
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
         
@@ -85,42 +82,26 @@ class MainApp:
         print(stime)
         
         if data in [1,"1"]:
-            self.origin_image = cv2.imread(r'./data/temp/2f_black_2.png')
+            # self.origin_image = cv2.imread(r'./data/temp/2f_black_3.png')
+            self.origin_image = cv2.imread(PATH_IMAGE_TEST)
             self.Processor = ImageProcessor(self.origin_image, self)
-            self.Processor.image_handler()
+            draw_frame = self.Processor.image_handler()
             
-    
+            if draw_frame is not None: 
+            
+                self.handle_update_frame(self.origin_image)
+                self.handle_update_frame_result(draw_frame)
+                
+                self.IS_DISPLAY_RESULT =  self.config['SETTING']['IS_DISPLAY_RESULT']
+                if self.IS_DISPLAY_RESULT == 1: 
+                    cv2.imshow("Result", draw_frame)
+                    
+                print(f"Time: {time.time() - stime} seconds")
+            else:
+                print("Failed to process image")
     def handle_connect_error(self):
         print("Connection Error: ")
                 
-    
-    def modify_config(self): 
-        """Lưu config vào file JSON"""
-        path = './data/configs/config.json'
-        try:
-            with open(path, "w") as f:
-                json.dump(self.config, f, indent=4)
-            print(f"Đã lưu config vào {path}")
-        except Exception as e:
-            print(f"Lỗi khi lưu config: {e}")
-                
-    
-    def modify_and_save_config(self, key, value):
-        """Modify config based on key and value, then save it"""
-        try:
-            # Split the key into section and subkey (e.g., "SETTING.THRESH_VALUE" -> "SETTING" and "THRESH_VALUE")
-            section, subkey = key.split(".")
-            if section in self.config and subkey in self.config[section]:
-                old_value = self.config[section][subkey]
-                self.config[section][subkey] = value
-                print(f"Changed {key} from {old_value} to {value}")
-                self.modify_config()  # Save the config file
-            else:
-                print(f"Key {key} does not exist in config")
-        except ValueError:
-            print(f"Key {key} is not in the correct 'SECTION.SUBKEY' format")
-        except Exception as e:
-            print(f"Error modifying config: {e}")
     
     def run(self):
         """Run the application."""
