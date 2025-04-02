@@ -76,19 +76,23 @@ class MainApp:
         self.window.image_label.setAlignment(Qt.AlignCenter)
     
     
-    
     def handle_data_received(self,data):
         stime = time.time()
-        print(stime)
         
         if data in [1,"1"]:
             # self.origin_image = cv2.imread(r'./data/temp/2f_black_3.png')
-            self.origin_image = cv2.imread(PATH_IMAGE_TEST)
-            self.Processor = ImageProcessor(self.origin_image, self)
+            selected_color = self.window.combobox.currentText()
+            
+            THRESH_VALUE = load_market_data()[selected_color]['THRESH_VALUE']
+            TEMPLATE_POINT_2RD = load_market_data()[selected_color]['TEMPLATE_POINT_2RD']
+            TEST_IMAGE = load_market_data()[selected_color]['IMAGE_TEST']
+            
+            self.origin_image = cv2.imread(TEST_IMAGE)
+            self.Processor = ImageProcessor(self.origin_image, self, thresh=THRESH_VALUE, template_path=TEMPLATE_POINT_2RD)
+            
             draw_frame = self.Processor.image_handler()
             
             if draw_frame is not None: 
-            
                 self.handle_update_frame(self.origin_image)
                 self.handle_update_frame_result(draw_frame)
                 

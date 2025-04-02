@@ -7,16 +7,16 @@
         "IDC": 0
     },
     "SETTING": {
-        "THRESH_VALUE": 15,
-        "HEIGHT_AREA": 38,
-        "HEIGHT_3RD_AREA": 45,
+        "THRESH_VALUE": 20,
+        "HEIGHT_AREA": 40,
+        "HEIGHT_3RD_AREA": 46,
         "OFFSET_TRANSLATE_Y": -2,
         "WIDTH_3RD_AREA": 40,
         "CONF_TEMPLATE": 0.85,
-        "CONF_FGLUE": 97.0,
-        "CONF_HPART_LEFT": 97.0,
-        "CONF_HPART_RIGHT": 97.0,
-        "CONF_3RD": 97.0,
+        "CONF_FGLUE": 97.5,
+        "CONF_HPART_LEFT": 97.5,
+        "CONF_HPART_RIGHT": 97.5,
+        "CONF_3RD": 97.5,
         "LINE_THINESS": 2,
         "IS_DISPLAY_FRAME": 0,
         "IS_DISPLAY_RESULT": 1

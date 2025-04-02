@@ -1,17 +1,19 @@
 from ultils import *
 import cv2
+import numpy as np
 
 class ImageProcessor: 
-    def __init__(self, image,  config_ref):
+    def __init__(self, image,  config_ref, thresh, template_path):
         self.main_ref = config_ref
         self.origin_img = image.copy()
         self.draw_img = image.copy()
         self.config = load_config()
+        self.THRESH_VALUE = thresh
+        print("Current thresh value: ", self.THRESH_VALUE)
         self.OFFSET_TRANSLATE_Y = self.config["SETTING"]["OFFSET_TRANSLATE_Y"]
         self.HEIGHT_3RD_AREA = self.config["SETTING"]["HEIGHT_3RD_AREA"]
         self.HEIGHT_AREA = self.config["SETTING"]["HEIGHT_AREA"]
         self.WIDTH_3RD_AREA =self.config["SETTING"]["WIDTH_3RD_AREA"]
-        self.THRESH_VALUE = self.config["SETTING"]["THRESH_VALUE"]
         self.CONF_FGLUE = self.config["SETTING"]["CONF_FGLUE"]
         self.CONF_HPART_LEFT = self.config["SETTING"]["CONF_HPART_LEFT"]
         self.CONF_HPART_RIGHT = self.config["SETTING"]["CONF_HPART_RIGHT"]
@@ -21,12 +23,13 @@ class ImageProcessor:
         
         
         # get template image 
-        self.template_image = cv2.imread(PATH_TEMPLATE,cv2.IMREAD_GRAYSCALE)
-        cv2.imshow('temp', self.template_image)
+        self.template_image = cv2.imread(template_path,cv2.IMREAD_GRAYSCALE)
+        cv2.imshow(template_path, self.template_image)
         
         # variables
         self.is_matching = False
         
+    
     
     def image_handler(self): 
         """main function hanlder"""
@@ -76,13 +79,30 @@ class ImageProcessor:
                 
                 third_crop_bottom_right = (area_3rd_bottom_right[0], area_3rd_bottom_right[1])
                 
-                area_3rd_crop_img = self.crop_by_regions(area_3rd_img, self.WIDTH_3RD_AREA)
+                area_3rd_crop_img = self.crop_by_regions_right(area_3rd_img, self.WIDTH_3RD_AREA)
+                
+                area_left_side_img = self.crop_by_regions_left(fglue_left_img,20)
+                
+                cv2.imshow('test', area_left_side_img)
+                
+                
                 
                 # calc white px percent in image 
                 # percent_s_fglue,thresh_fglue = self.calc_percent_white_px(fglue_img)
                 percent_s_fglue_left,thresh_fglue_left = self.calc_percent_white_px(fglue_left_img)
                 percent_s_fglue_right,thresh_fglue_right = self.calc_percent_white_px(fglue_right_img)
                 percent_s_area_3rd_crop,thresh_3rd_crop = self.calc_percent_white_px(area_3rd_crop_img)
+                
+                # left_side_img = self.crop_by_regions_left(fglue_left_img, 10)
+                # height_left_side, width_left_side = left_side_img.shape[:2]
+                # top_height = 10
+                
+                # top_part = left_side_img[0:top_height, 0:width_left_side]
+                # bottom_part = left_side_img[top_height:height_left_side, 0:width_left_side]
+                
+                # percent_left_side,_ = self.calc_percent_white_px(bottom_part)
+                
+                # print('test',percent_left_side)
                 
                 
                 # draw rectangle on drawing image
@@ -124,9 +144,9 @@ class ImageProcessor:
                 # cv2.imshow('draw',self.draw_img)
                 
                 # # cv2.imshow("Region 1", fglue_img)
-                # cv2.imshow("Region 2", fglue_left_img)
-                # cv2.imshow("Region 3", fglue_right_img)
-                # cv2.imshow("Region 4", area_3rd_crop_img)
+                cv2.imshow("Region 2", fglue_left_img)
+                cv2.imshow("Region 3", fglue_right_img)
+                cv2.imshow("Region 4", area_3rd_crop_img)
                 
                 
                 # cv2.imshow("Thresh Area 1 ", cv2.resize(thresh_fglue, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR))
@@ -144,7 +164,7 @@ class ImageProcessor:
             print(f'Error when run main function hanlder: {E}')
             return None
     
-    def crop_by_regions(self, img, w):
+    def crop_by_regions_right(self, img, w):
     # Tính tọa độ phần bên phải của ảnh đầu vào (img)
         right_top_left = (img.shape[1] - w, 0)  # x = chiều rộng ảnh - w, y = 0
         right_bottom_right = (img.shape[1], img.shape[0])  # x = chiều rộng ảnh, y = chiều cao ảnh
@@ -156,6 +176,15 @@ class ImageProcessor:
         x2 = right_bottom_right[0]
         
         return img[y1:y2, x1:x2]
+
+    def crop_by_regions_left(self,img, w):
+        # Điểm bắt đầu: góc trên bên trái (0, 0)
+        top_left = (0, 0)
+        # Điểm kết thúc: x = w, y = chiều cao ảnh
+        bottom_right = (w, img.shape[0])
+        # Cắt vùng từ trái
+        left_region = img[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]]
+        return left_region
     
     def crop_image(self, top_left, bottom_right): 
         """crop image"""
@@ -200,4 +229,17 @@ class ImageProcessor:
         # gray = cv2.GaussianBlur(gray, (3, 3), 0)
         _, thresh = cv2.threshold(gray, self.THRESH_VALUE, 255, cv2.THRESH_BINARY)
         return thresh
+    
+    
+    # def useThresh(self, image): 
+    #     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+    #     # Định nghĩa ngưỡng màu xanh (có thể điều chỉnh)
+    #     lower_blue = np.array([40, 50, 50])   # Ngưỡng dưới (H, S, V)
+    #     upper_blue = np.array([140, 255, 255]) # Ngưỡng trên (H, S, V)
+
+    #     # Tạo mask để lấy vùng màu xanh
+    #     mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    #     return mask
     

@@ -1,0 +1,22 @@
+{
+    "ORANGE": {
+        "THRESH_VALUE": 20,
+        "TEMPLATE_POINT_2RD": "./data/templates/orange/template_point_2.png",
+        "IMAGE_TEST": "./data/templates/orange/image_test.png"
+    },
+    "PURPLE": {
+        "THRESH_VALUE": 10,
+        "TEMPLATE_POINT_2RD": "./data/templates/purple/template_point_2.png",
+        "IMAGE_TEST": "./data/templates/purple/image_test.png"
+    },
+    "BLACK": {
+        "THRESH_VALUE": 15,
+        "TEMPLATE_POINT_2RD": "./data/templates/black/template_point_2.png",
+        "IMAGE_TEST": "./data/templates/black/image_test.png"
+    },
+    "GRAY": {
+        "THRESH_VALUE": 5,
+        "TEMPLATE_POINT_2RD": "./data/templates/black/template_point_2.png",
+        "IMAGE_TEST": ""
+    }
+}
