@@ -1,8 +1,7 @@
 from ultils import *
 import cv2
-import numpy as np
 
-class ImageProcessor: 
+class ProcessImagePoint_1: 
     def __init__(self, image,  config_ref, thresh, template_path):
         self.main_ref = config_ref
         self.origin_img = image.copy()

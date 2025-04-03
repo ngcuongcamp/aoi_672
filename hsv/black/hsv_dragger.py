@@ -18,7 +18,6 @@ hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
 # Tạo cửa sổ cho trackbar
 cv2.namedWindow("HSV Controls")
-
 # Tạo trackbar cho màu xanh
 cv2.createTrackbar("Blue H Min", "HSV Controls", 0, 179, nothing)  # Hue min cho màu xanh
 cv2.createTrackbar("Blue H Max", "HSV Controls", 179, 179, nothing)  # Hue max cho màu xanh

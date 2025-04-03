@@ -1,22 +1,66 @@
 {
     "ORANGE": {
-        "THRESH_VALUE": 20,
+        "THRESH_VALUE": 12,
+        "TEMPLATE_POINT_1ST": "./data/templates/orange/template_point_1.png",
         "TEMPLATE_POINT_2RD": "./data/templates/orange/template_point_2.png",
-        "IMAGE_TEST": "./data/templates/orange/image_test.png"
+        "CONF_POINT_2RD": 0.85,
+        "IMAGE_TEST": "./data/templates/orange/image_test_2.png",
+        "BLUE_H_MIN": 80,
+        "BLUE_H_MAX": 179,
+        "BLUE_S_MIN": 0,
+        "BLUE_S_MAX": 255,
+        "BLUE_V_MIN": 110,
+        "BLUE_V_MAX": 255,
+        "WHITE_S_MAX": 100,
+        "WHITE_V_MIN": 110,
+        "HEIGHT_TOP_2RD": 6
     },
     "PURPLE": {
         "THRESH_VALUE": 10,
+        "TEMPLATE_POINT_1ST": "./data/templates/purple/template_point_1.png",
         "TEMPLATE_POINT_2RD": "./data/templates/purple/template_point_2.png",
-        "IMAGE_TEST": "./data/templates/purple/image_test.png"
+        "CONF_POINT_2RD": 0.85,
+        "IMAGE_TEST": "./data/templates/purple/image_test.png",
+        "BLUE_H_MIN": 0,
+        "BLUE_H_MAX": 115,
+        "BLUE_S_MIN": 0,
+        "BLUE_S_MAX": 255,
+        "BLUE_V_MIN": 130,
+        "BLUE_V_MAX": 255,
+        "WHITE_S_MAX": 0,
+        "WHITE_V_MIN": 255,
+        "HEIGHT_TOP_2RD": 6
     },
     "BLACK": {
-        "THRESH_VALUE": 15,
+        "THRESH_VALUE": 8,
+        "TEMPLATE_POINT_1ST": "./data/templates/black/template_point_1.png",
         "TEMPLATE_POINT_2RD": "./data/templates/black/template_point_2.png",
-        "IMAGE_TEST": "./data/templates/black/image_test.png"
+        "CONF_POINT_2RD": 0.85,
+        "IMAGE_TEST": "./data/templates/black/image_test.png",
+        "BLUE_H_MIN": 0,
+        "BLUE_H_MAX": 179,
+        "BLUE_S_MIN": 70,
+        "BLUE_S_MAX": 255,
+        "BLUE_V_MIN": 50,
+        "BLUE_V_MAX": 255,
+        "WHITE_S_MAX": 70,
+        "WHITE_V_MIN": 155,
+        "HEIGHT_TOP_2RD": 6
     },
     "GRAY": {
         "THRESH_VALUE": 5,
+        "TEMPLATE_POINT_1ST": "./data/templates/black/template_point_1.png",
         "TEMPLATE_POINT_2RD": "./data/templates/black/template_point_2.png",
-        "IMAGE_TEST": ""
+        "CONF_POINT_2RD": 0.85,
+        "IMAGE_TEST": "./data/templates/black/image_test.png",
+        "BLUE_H_MIN": 0,
+        "BLUE_H_MAX": 179,
+        "BLUE_S_MIN": 70,
+        "BLUE_S_MAX": 255,
+        "BLUE_V_MIN": 50,
+        "BLUE_V_MAX": 255,
+        "WHITE_S_MAX": 70,
+        "WHITE_V_MIN": 155,
+        "HEIGHT_TOP_2RD": 6
     }
 }

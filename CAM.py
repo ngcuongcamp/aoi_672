@@ -1,3 +1,4 @@
+import cv2
 from GUI import MainUi
 import sys
 from PyQt5.QtGui import QImage, QPixmap
@@ -5,8 +6,9 @@ from PyQt5.QtWidgets import (QApplication,)
 from PyQt5.QtCore import Qt
 from Serial_Thread import Serial_Thread
 from Camera_Thread import Camera_Thread
-import cv2
-from ImageProcessor import ImageProcessor
+from ProcessImagePoint_1 import ProcessImagePoint_1
+from ProcessImagePoint_2 import ProcessImagePoint_2
+from ProcessImagePoint_3 import ProcessImagePoint_3
 import time
 from ultils import *
 
@@ -80,17 +82,16 @@ class MainApp:
         stime = time.time()
         
         if data in [1,"1"]:
-            # self.origin_image = cv2.imread(r'./data/temp/2f_black_3.png')
             selected_color = self.window.combobox.currentText()
             
             THRESH_VALUE = load_market_data()[selected_color]['THRESH_VALUE']
-            TEMPLATE_POINT_2RD = load_market_data()[selected_color]['TEMPLATE_POINT_2RD']
+            TEMPLATE_POINT_1ST = load_market_data()[selected_color]['TEMPLATE_POINT_1ST']
             TEST_IMAGE = load_market_data()[selected_color]['IMAGE_TEST']
             
             self.origin_image = cv2.imread(TEST_IMAGE)
-            self.Processor = ImageProcessor(self.origin_image, self, thresh=THRESH_VALUE, template_path=TEMPLATE_POINT_2RD)
+            Processor_1 = ProcessImagePoint_1(self.origin_image, self, thresh=THRESH_VALUE, template_path=TEMPLATE_POINT_1ST)
             
-            draw_frame = self.Processor.image_handler()
+            draw_frame = Processor_1.image_handler()
             
             if draw_frame is not None: 
                 self.handle_update_frame(self.origin_image)
@@ -103,6 +104,16 @@ class MainApp:
                 print(f"Time: {time.time() - stime} seconds")
             else:
                 print("Failed to process image")
+        if data in [2, "2"]:
+            selected_color = self.window.combobox.currentText()
+            TEST_IMAGE = load_market_data()[selected_color]['IMAGE_TEST']
+            self.origin_image = cv2.imread(TEST_IMAGE)
+            Processor_2 = ProcessImagePoint_2(self.origin_image, self,selected_color)
+            is_break_line, is_overflow_top=Processor_2.image_handler()
+            
+            print('is_break_line: ', is_break_line)
+            print('is_overflow_top: ', is_overflow_top)
+            
     def handle_connect_error(self):
         print("Connection Error: ")
                 
