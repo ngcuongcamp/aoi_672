@@ -58,8 +58,15 @@ class ProcessImagePoint_2:
                         height_top_area = height - height_object
                         
                         if height_top_area < self.HEIGHT_TOP_2RD: 
+                            print('Kích thước hở đầu: ', height_top_area)
+                            print('Kích thước hở quy định: ', self.HEIGHT_TOP_2RD)
+                            
                             print("tràn keo đầu")
                             self.is_overflow_glue = True
+                        else:
+                            print("Không phát hiện keo ở đầu điểm 2.")
+                    else:
+                        print('Xác nhận hở keo hoặc thừa keo khu vực 2')
                         
                 
                 return self.is_break_line, self.is_overflow_glue
@@ -67,7 +74,6 @@ class ProcessImagePoint_2:
         except Exception as E: 
             print(f'Error when run main function hanlder: {E}')
             return None
-    
     
     
     def filter_glue_hsv(self, crop_image): 

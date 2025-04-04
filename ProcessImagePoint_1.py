@@ -18,7 +18,7 @@ class ProcessImagePoint_1:
         self.CONF_HPART_RIGHT = self.config["SETTING"]["CONF_HPART_RIGHT"]
         self.CONF_3RD = self.config["SETTING"]["CONF_3RD"]
         self.LINE_THINESS = self.config["SETTING"]["LINE_THINESS"]
-        self.CONF_TEMPLATE =  self.config['SETTING']['CONF_TEMPLATE']
+        
         
         
         # get template image 

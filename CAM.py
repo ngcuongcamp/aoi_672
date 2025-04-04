@@ -113,6 +113,14 @@ class MainApp:
             
             print('is_break_line: ', is_break_line)
             print('is_overflow_top: ', is_overflow_top)
+        
+        if data in [3, "3"]: 
+            selected_color = self.window.combobox.currentText()
+            TEST_IMAGE = load_market_data()[selected_color]['IMAGE_TEST']
+            self.origin_image = cv2.imread(TEST_IMAGE)
+            Processor_3 = ProcessImagePoint_3(self.origin_image, self,selected_color)
+            
+            Processor_3.image_handler()
             
     def handle_connect_error(self):
         print("Connection Error: ")
